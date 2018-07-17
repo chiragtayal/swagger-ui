@@ -1,0 +1,319 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the primary interface to the milkyway framework.",
+    "version": "1.0.0",
+    "title": "Milkyway Api"
+  },
+  "host": "10.180.73.117",
+  "basePath": "",
+  "tags": [
+    {
+      "name": "Admin Api",
+      "description": "Central Controller Admin API",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.paypal.com/PaaS-R/paas/wiki/Central-Network-Controller--Admin-API-Reference" 
+      }
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/v1/containernetwork": {
+      "post": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Define Network",
+        "description": "",
+        "operationId": "createNetwork",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create network",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/create_network"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Delete Network",
+        "description": "",
+        "operationId": "deleteNetwork",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Delete Network",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/delete_network"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      }
+    },
+    "/v1/containerhosts": {
+      "post": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Bind Hosts to Network",
+        "description": "Bind Hosts to Network",
+        "operationId": "bindHostsToNetwork",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Bind Hosts to Network",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind_host"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid status value"
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Unbind Hosts to Network",
+        "description": "Unbind Hosts to Network",
+        "operationId": "unBindHostsToNetwork",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Unbind Hosts to Network",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/bind_host"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid status value"
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      }
+    },
+    "/v1/reservebindings": {
+      "post": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Reserve Bindings",
+        "description": "Reserve Bindings",
+        "operationId": "reserveBinding",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Reserve Bindings",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/reserve_binding"
+	    }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid tag value"
+          },
+	  "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/reserve_binding_response"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Admin Api"
+        ],
+        "summary": "Delete Reserve Bindings",
+        "description": "Delete Reserve Bindings",
+        "operationId": "deleteReserveBinding",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Delete Reserve Bindings",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/reserve_binding"
+	    }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "UserSecurity": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "UserSecurity": {
+      "type": "oauth2",
+      "authorizationUrl": "http://10.176.8.91:8282/o/oauth2/v2/auth",
+      "tokenUrl": "http://10.176.8.91:8282/oauth2/v4/token",
+      "redirectUri": "http://10.176.8.91/oauth2-redirect.html",
+      "flow": "accessCode",
+      "scopes":{}
+    }
+  },
+  "definitions": {
+    "create_network": {
+      "type": "object",
+      "properties": {
+        "NetworkName": {
+          "type": "string",
+          "format": ""
+        },
+        "NetworkType": {
+          "type": "string",
+          "format": ""
+        },
+        "Cidr": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "MobileIpCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "MaxIpsPerInterface": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "MaxIpsPerHost": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "delete_network": {
+      "type": "object",
+      "properties": {
+        "NetworkName": {
+          "type": "string",
+          "format": ""
+        }
+      }
+    },
+    "bind_host": {
+      "type": "object",
+      "properties": {
+        "HostIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+	"NetworkName": {
+          "type": "string",
+          "format": ""
+	}
+      }
+    },
+    "reserve_binding": {
+      "type": "object",
+      "properties": {
+	"ReservedLabels": {
+	  "type": "array",
+	  "items": {
+	    "type": "object",
+	    "properties": {
+	      "Label": {
+		"type": "string"
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }
+}

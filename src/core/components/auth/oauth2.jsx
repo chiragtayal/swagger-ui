@@ -172,11 +172,11 @@ export default class Oauth2 extends React.Component {
               isAuthorized ? <code> ****** </code>
                            : <Col tablet={10} desktop={10}>
                                <input id="client_id"
-                                      type="text"
+                                      type="password"
                                       required={ flow === PASSWORD }
                                       value={ this.state.clientId }
-                                      data-name="clientId"
-                                      onChange={ this.onInputChange }/>
+                                      data-name="clientId" 
+                                      onChange={ this.onInputChange } disabled/>
                              </Col>
             }
           </Row>
@@ -190,9 +190,9 @@ export default class Oauth2 extends React.Component {
                            : <Col tablet={10} desktop={10}>
                                <input id="client_secret"
                                       value={ this.state.clientSecret }
-                                      type="text"
+                                      type="password"
                                       data-name="clientSecret"
-                                      onChange={ this.onInputChange }/>
+                                      onChange={ this.onInputChange } disabled />
                              </Col>
             }
 

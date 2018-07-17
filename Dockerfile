@@ -4,7 +4,7 @@ LABEL maintainer="fehguy"
 
 ENV VERSION "v2.2.10"
 ENV FOLDER "swagger-ui-2.2.10"
-ENV API_URL "https://petstore.swagger.io/v2/swagger.json"
+#ENV API_URL "https://petstore.swagger.io/v2/swagger.json"
 ENV API_URLS ""
 ENV API_KEY "**None**"
 ENV OAUTH_CLIENT_ID "**None**"
@@ -18,12 +18,17 @@ ENV BASE_URL ""
 
 RUN apk add --update nginx
 RUN mkdir -p /run/nginx
+RUN mkdir -p /app
 
 COPY nginx.conf /etc/nginx/
+
+COPY swagger.json /app
 
 # copy swagger files to the `/js` folder
 ADD ./dist/* /usr/share/nginx/html/
 ADD ./docker-run.sh /usr/share/nginx/
+
+RUN chmod 0644 /usr/share/nginx/html/*
 
 EXPOSE 8080
 
